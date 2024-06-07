@@ -19,6 +19,7 @@ class ProjectHelper:
         self.fill_project_form(project)
         wd.find_element_by_xpath("//input[@value='Add Project']").click()
         self.return_to_project_page()
+        #self.project_cache = None
 
     def fill_project_form(self, project):
         wd = self.app.wd
@@ -43,4 +44,15 @@ class ProjectHelper:
             wd.find_element_by_link_text("Manage").click()
             wd.find_element_by_link_text("Manage Projects").click()
 
+    def delete_project_by_id(self, id):
+        wd = self.app.wd
+        self.open_project_page()
+        self.select_project_by_id(id)
+        # submit deletion
+        wd.find_element_by_xpath("//input[@value='Delete Project']").click()
+        wd.find_element_by_xpath("//input[@value='Delete Project']").click()
+        self.project_cache = None
 
+    def select_project_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector('a[href ^= "manage_proj_edit_page.php?project_id=' + str(id) + '"]').click()

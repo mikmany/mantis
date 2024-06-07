@@ -2,7 +2,6 @@ from model.project import Project
 
 
 def test_add_project(app, db):
-    app.session.login("administrator", "root")
     old_projects = db.get_project_list()
     project = Project(name="test_name", description="test_description")
     app.project.create(project)

@@ -21,9 +21,11 @@ def load_config(file):
 def app(request):
     global fixture
     browser = request.config.getoption("--browser")
-    web_config = load_config(request.config.getoption("--target"))['web']
+    web_url = load_config(request.config.getoption("--target"))["web"]
+    web_config = load_config(request.config.getoption("--target"))['webadmin']
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=web_config['baseUrl'])
+        fixture = Application(browser=browser, base_url=web_url["baseUrl"])
+    fixture.session.ensure_login(username=web_config["username"], password=web_config["password"])
     return fixture
 
 
@@ -37,7 +39,7 @@ def stop(request):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--target", action="store", default="target.json")
 
 
