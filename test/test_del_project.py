@@ -3,7 +3,7 @@ import random
 from random import randint
 
 
-def test_del_project(app, db, config):
+def test_del_project(app, config):
     if len(app.soap.get_project_list()) == 0:
         app.project.create(
             Project(name="test_name" + str(randint(1, 100000)),
